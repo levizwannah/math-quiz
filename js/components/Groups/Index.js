@@ -405,7 +405,7 @@ class Index extends Component {
     }
 
     async $$timeElapsed(){
-        if(this.gc.gameOver.value === true) return;
+        if(context('global').gameOver.value === true) return;
 
         broker.send("answerSubmitted", eData({}, this.getSubmission()));
     }
