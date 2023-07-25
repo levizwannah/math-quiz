@@ -8,14 +8,15 @@
  * Set the default route path here
  * ----------------------------------
  */
-route.basePath(ojsConf.path.assets);
+route.basePath(''); // === '/'
+
 
 /*-----------------------------------
  | set the directories in which we
  | can find the context files
  |-----------------------------------
 */
-ContextProvider.directory = route.baseUrl(ojsConf.path.contexts);
+ContextProvider.directory = route.baseUrl('js/contexts');
 
 /*-----------------------------------
  | set the version number of the
@@ -24,7 +25,7 @@ ContextProvider.directory = route.baseUrl(ojsConf.path.contexts);
  | files change
  |-----------------------------------
 */
-ContextProvider.version = ojsConf.versions.cxt;
+ContextProvider.version = '1.0.0';
 
 /*-----------------------------------
  | Set the Mediators directory
@@ -32,7 +33,7 @@ ContextProvider.version = ojsConf.versions.cxt;
  | from that directory
  |-----------------------------------
 */
-MediatorManager.directory = route.baseUrl(ojsConf.path.mediators);
+MediatorManager.directory = route.baseUrl('js/mediators');
 
 /*-----------------------------------
  | Set the version number of the 
@@ -41,14 +42,14 @@ MediatorManager.directory = route.baseUrl(ojsConf.path.mediators);
  | mediators files upon changes.
  |----------------------------------
 */
-MediatorManager.version = ojsConf.versions.mtr;
+MediatorManager.version = '1.0.0';
 
 /*-----------------------------------
  | Set the default component
  | directory for the loader
  |-----------------------------------
 */
-loader.dir = route.baseUrl(ojsConf.path.components);
+loader.dir = route.baseUrl('js/components');
 
 /*-----------------------------------
  | set the version number of the
@@ -56,7 +57,7 @@ loader.dir = route.baseUrl(ojsConf.path.components);
  | a fresh file when they change
  |-----------------------------------
 */
-loader.version = ojsConf.versions.cmp;
+loader.version = '1.0.0';
 
 /*-----------------------------------
  | Set the default directory of the
@@ -65,7 +66,7 @@ loader.version = ojsConf.versions.cmp;
  |-----------------------------------
 */
 
-autoload.dir = route.baseUrl(ojsConf.path.files);
+autoload.dir = route.baseUrl('js/classes');
 
 /*-----------------------------------
  | set the version number of the
@@ -73,7 +74,7 @@ autoload.dir = route.baseUrl(ojsConf.path.files);
  | a fresh file when they change
  |-----------------------------------
 */
-autoload.version = ojsConf.versions.file;
+autoload.version = '1.0.0';
 
 /*--------------------------------
  | Set the logs clearing interval
@@ -81,7 +82,7 @@ autoload.version = ojsConf.versions.file;
  | events. (milliseconds)
  |--------------------------------
 */
-broker.CLEAR_LOGS_AFTER = 30000;
+broker.CLEAR_LOGS_AFTER = 30000; // 30 secs
 
 /*--------------------------------
  | Set how old an event must be
@@ -89,7 +90,7 @@ broker.CLEAR_LOGS_AFTER = 30000;
  | event log during logs clearing
  |--------------------------------
 */
-broker.TIME_TO_GC = 10000;
+broker.TIME_TO_GC = 10000; // 10 secs
 
 
 /*-------------------------------------------
@@ -97,4 +98,4 @@ broker.TIME_TO_GC = 10000;
  | collector for the broker
  |-------------------------------------------
 */
-broker.removeStaleEvents();
+broker.removeStaleEvents(); // broker garbage collection started

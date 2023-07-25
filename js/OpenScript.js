@@ -1798,8 +1798,15 @@ var OpenScript = {
                     set(target, prop, value) {
                     
                         if(prop === "value") {
+                            let current = target.value;
+                            let nVal = value;
 
-                            if(target.value === value) return true;
+                            if(typeof current === "object"){
+                                current = JSON.stringify(current);
+                                nVal = JSON.stringify(nVal);
+                            }
+
+                            if(current === nVal) return true;
 
                             Reflect.set(...arguments);
 
