@@ -40,7 +40,7 @@ class Game extends OpenScript.Mediator {
         return {numbers: {first, second}, operator};
     }
 
-    $$showQuestion(){
+    async $$showQuestion(){
 
         let digitsLimit = 9;
         const gc = context('global');
@@ -60,15 +60,13 @@ class Game extends OpenScript.Mediator {
         this.send("questionShown");
     }
 
-    $$startGame(){
+    async $$startGame(){
 
         context('global').timer.value = context('global').timeLimit.value;
-
-        this.send('startTimer');
         this.send('showQuestion');
     }
 
-    $$answerSubmitted(data){
+    async $$answerSubmitted(data){
         let ed = EventData.parse(data);
     
         const question  = ed.message.question;
@@ -87,7 +85,7 @@ class Game extends OpenScript.Mediator {
         return this.send('answerWrong', eData(ed.meta, ed.message));
     }
 
-    $$answerCorrect_answerWrong(data){
+    async $$answerCorrect_answerWrong(data){
         let ed = EventData.parse(data);
 
         const {correct} = ed.message;
@@ -107,11 +105,11 @@ class Game extends OpenScript.Mediator {
         this.send('showQuestion');
     }
 
-    $$questionShown(){
+    async $$questionShown(){
         this.send('startTimer');
     }
 
-    $$startTimer(){
+    async $$startTimer(){
         let timer = context('global').timer;
 
         const changeTime = () => {
