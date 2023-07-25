@@ -3,6 +3,7 @@ class Global extends OpenScript.Context {
     highScore;
     question;
     lives;
+    maxLives;
     timer;
     given;
     max;
@@ -10,6 +11,7 @@ class Global extends OpenScript.Context {
     input;
     scoreIncrement;
     timerId;
+    gameOver;
     
     constructor(){
         super();
@@ -17,7 +19,8 @@ class Global extends OpenScript.Context {
         this.has('timeLimit').value = 10;
         this.has('score').value = 0;
         this.has('question').value = {numbers: {first: 0, second: 0}, operator: 'plus'};
-        this.has('lives').value = 10;
+        this.has('maxLives').value = 5;
+        this.has('lives').value = this.maxLives.value;
         this.has('timer').value = this.timeLimit.value;
         this.has('given').value = 0;
         this.has('max').value = 200;
@@ -25,5 +28,6 @@ class Global extends OpenScript.Context {
         this.has('highScore').value = localStorage.getItem('highScore') ?? 0;
         this.has('scoreIncrement').value = 5;
         this.has('timerId').value = null;
+        this.has('gameOver').value = false;
     }
 }
