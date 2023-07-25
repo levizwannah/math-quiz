@@ -99,6 +99,15 @@
 .row-scores :nth-child(3),
 .row-scores :nth-child(4) {
    cursor: pointer;
+   background-color: #fff;
+}
+
+.row-scores :nth-child(3):hover {
+   background-color: #f1c6c6;
+}
+
+.row-scores :nth-child(4):hover {
+   background-color: #d0f4df;
 }
 
 
@@ -147,4 +156,22 @@
    display: inline-flex;
    align-items: center;
    justify-content: center;
+   color: var(--bs-danger);
+   font-weight: 900;
+}
+
+.modal-content {
+   --radius: .5rem;
+   border-radius: var(--radius);
+   box-shadow: 7px 10px 30px rgba(0, 0, 0, .25);
+}
+
+.modal-header {
+   border-top-left-radius: calc(var(--radius) - 1px);
+   border-top-right-radius: calc(var(--radius) - 1px);
+}
+
+.modal-footer {
+   border-bottom-left-radius: calc(var(--radius) - 1px);
+   border-bottom-right-radius: calc(var(--radius) - 1px);
 }
