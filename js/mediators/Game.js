@@ -118,10 +118,11 @@ class Game extends OpenScript.Mediator {
             }
 
             timer.value--;
-            setTimeout(changeTime, 1000);
+            context('global').timerId.value = setTimeout(changeTime.bind(this), 1000);
         }
+        clearTimeout(context('global').timerId.value);
+        context('global').timerId.value = setTimeout(changeTime.bind(this), 1000);
 
-        setTimeout(changeTime.bind(this), 1000);
     }
 
 }

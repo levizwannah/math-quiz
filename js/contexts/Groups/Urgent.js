@@ -9,6 +9,7 @@ class Global extends OpenScript.Context {
     timeLimit;
     input;
     scoreIncrement;
+    timerId;
     
     constructor(){
         super();
@@ -23,5 +24,6 @@ class Global extends OpenScript.Context {
         this.has('input').value = 0;
         this.has('highScore').value = localStorage.getItem('highScore') ?? 0;
         this.has('scoreIncrement').value = 5;
+        this.has('timerId').value = null;
     }
 }
