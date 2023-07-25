@@ -10,6 +10,9 @@
  */
 route.basePath(''); // === '/'
 
+if((new URL(window.location.href).hostname !== '127.0.0.1')){
+    route.basePath('math-quiz');
+}
 
 /*-----------------------------------
  | set the directories in which we
