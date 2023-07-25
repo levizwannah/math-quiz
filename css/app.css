@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+
 :root {
    --keypad-spacer: .75rem;
    --body-bg: #fafaf5;
@@ -28,6 +30,34 @@
 
 
 /* keypad */
+
+.row-keypad {
+   position: relative;
+}
+
+.row-keypad::before,
+.row-keypad::after {
+   content: "Math Quiz";
+   position: absolute;
+   font-size: 4rem;
+   font-weight: 700;
+   font-family: 'Berkshire Swash', cursive;
+   color: rgba(0, 0, 0, .15);
+   text-shadow:
+      1px 1px #fff,
+      2px 3px rgba(11, 11, 78, .25);
+   top: 0;
+}
+
+.row-keypad::before {
+   transform: translateX(-17.5rem) rotate(-45deg);
+   left: 0;
+}
+
+.row-keypad::after {
+   transform: translateX(17.5rem) rotate(45deg);
+   right: 0;
+}
 
 .row-keypad .row {
    justify-content: center;
