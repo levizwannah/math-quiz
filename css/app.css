@@ -11,6 +11,27 @@
    background-color: var(--body-bg);
 }
 
+#root::before,
+#root::after {
+   content: "Ojs";
+   position: fixed;
+   font-size: 3rem;
+   font-weight: 700;
+   color: rgba(19, 183, 95, 0.5);
+   text-shadow:
+      1px 1px #fff,
+      2px 3px rgba(11, 11, 78, .25);
+   top: 2rem;
+}
+
+#root::before {
+   left: 3rem;
+}
+
+#root::after {
+   right: 3rem;
+}
+
 .lives {
    color: rgb(245, 76, 76);
 }
