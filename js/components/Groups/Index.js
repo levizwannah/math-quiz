@@ -9,7 +9,7 @@ class KeyPad extends Component {
         for(let i = 9; i >= 0; i -= 3){
             let buttons = [];
 
-            for(let j = 0; j < 3; j++){
+            for(let j = 2; j >= 0; j--){
                 if(i == 0) break;
                 buttons.push(
                     h.div(                        
@@ -43,7 +43,8 @@ class KeyPad extends Component {
                         h.button(
                             {
                                 class: "btn btn-outline-dark btn-number",
-                                data_number: "0"
+                                data_number: "0",
+                                onclick: this.method('click', [0])
                             },
                             0
                         )
@@ -201,9 +202,9 @@ class Index extends Component {
                     )
                 ), 
                 h.div(            
-                    {class: "col col-2 align-self-end"},
+                    {class: "col col-3 text-end"},
                     h.div(                
-                        {class: "border rounded-circle p-1 text-center"},
+                        {class: "box-timer border rounded-circle text-center"},
                         v(this.gc.timer)
                     )
                 )
@@ -217,7 +218,10 @@ class Index extends Component {
             h.div(        
                 {class: "mb-2 text-center"},
                 h.div(            
-                    {class: "border rounded-pill w-50 mx-auto"},
+                    {
+                        class: "border rounded-pill w-50 mx-auto",
+                        id: "answer-input"
+                    },
                     h.h1(v(this.gc.input))
                 )
             ), 
@@ -245,7 +249,7 @@ class Index extends Component {
         const answer = Number(this.gc.input.value);
         const question = this.gc.question.value;
 
-        this.clearInput();
+        this.clearInput(true);
 
         return {answer, question};
     }
@@ -254,7 +258,34 @@ class Index extends Component {
         broker.send("answerSubmitted", eData({}, this.getSubmission()));
     }
 
-    clearInput(){
-        this.gc.input.value = 0;
+    $$answerCorrect(){
+        
+        let elem = document.querySelector('#answer-input');
+        elem.classList.add('border-success');
+
+        setTimeout(() => {
+            elem.classList.remove('border-success');
+        }, 1000);
+    }
+
+    $$answerWrong(){
+
+        let elem = document.querySelector('#answer-input');
+        elem.classList.add('border-danger');
+
+        setTimeout(() => {
+            elem.classList.remove('border-danger');
+        }, 1000);
+
+    }
+
+    clearInput(all = false){
+        if(all) return this.gc.input.value = 0;
+
+        let curr = "" + this.gc.input.value;
+        if(curr.length === 1) curr = 0;
+        else curr = curr.substring(0, curr.length - 1);
+
+        this.gc.input.value = curr;
     }
 }

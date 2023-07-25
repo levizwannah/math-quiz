@@ -12,35 +12,39 @@ class Game extends OpenScript.Mediator {
         return Math.floor(Number(num1) / Number(num2));
     }
 
-    multiply(num1, num2) {
+    times(num1, num2) {
         return Number(num1) * Number(num2);
     }
 
     getAnswer(num1, num2, operator){
-        return this[operator](num1, num2);
+        if(this[operator]) return this[operator](num1, num2);
+        return null;
     }
 
     generateQuestion(maxNumber){
         const operators = ['plus', 'minus', 'divide', 'times'];
 
-        const random = (max, digits = 2) => {
-            return Math.floor(Math.random() * Math.pow(10, digits)) % (max + 1);
+        const random = (max, digits = 2, min = 0) => {
+            return (Math.floor(Math.random() * Math.pow(10, digits)) % (max + 1)) + min;
         }
 
         let first = random(maxNumber);
         let second = random(maxNumber);
         let operator = operators[random(3, 1)];
-
-        [first, second] = [Math.min(first, second), Math.max(first, second)];
+        let numbers = [first, second];
+        
+        first = Math.max(numbers[0], numbers[1]);
+        second = Math.min(numbers[0], numbers[1]);
 
         if(operator === 'divide'){
+            if(second === 0) second = random(maxNumber, 2, 1);
             first = random(15) * second;
         }
 
         return {numbers: {first, second}, operator};
     }
 
-    $$showQuestion(){
+    async $$showQuestion(){
 
         let digitsLimit = 9;
         const gc = context('global');
@@ -60,15 +64,14 @@ class Game extends OpenScript.Mediator {
         this.send("questionShown");
     }
 
-    $$startGame(){
-
+    async $$startGame(){
         context('global').timer.value = context('global').timeLimit.value;
-
+        
         this.send('startTimer');
         this.send('showQuestion');
     }
 
-    $$answerSubmitted(data){
+    async $$answerSubmitted(data){
         let ed = EventData.parse(data);
     
         const question  = ed.message.question;
@@ -76,7 +79,7 @@ class Game extends OpenScript.Mediator {
         const {first, second} = question.numbers;
 
         let expected = this.getAnswer(first, second, question.operator) - 0;
-        let correct = answer == expected;
+        let correct = Number(answer) == expected;
 
         ed.message.correct = correct;
 
@@ -87,7 +90,7 @@ class Game extends OpenScript.Mediator {
         return this.send('answerWrong', eData(ed.meta, ed.message));
     }
 
-    $$answerCorrect_answerWrong(data){
+    async $$answerCorrect_answerWrong(data){
         let ed = EventData.parse(data);
 
         const {correct} = ed.message;
@@ -100,30 +103,44 @@ class Game extends OpenScript.Mediator {
         }
 
         if(correct) {
-            gc.score.value += gc.scoreIncrement.value;
+            gc.score.value += (gc.scoreIncrement.value + Math.max(gc.timer.value - 7, 0));
+
+            if(gc.given.value % 20 === 0 && gc.lives.value < gc.maxLives.value){
+                gc.lives.value++;
+            }
+        }
+
+        if(gc.lives.value <= 0 || gc.given.value >= gc.max.value){
+            return this.send('gameOver');
         }
 
         gc.timer.value = gc.timeLimit.value;
         this.send('showQuestion');
     }
 
-    $$questionShown(){
-        this.send('startTimer');
-    }
-
-    $$startTimer(){
-        let timer = context('global').timer;
+    async $$startTimer(){
 
         const changeTime = () => {
+            let timer = context('global').timer;
             if(timer.value <= 0) {
-                return this.send('timeElapsed');
+                timer.value = 0;
+                return broker.send('timeElapsed');
             }
 
             timer.value--;
-            context('global').timerId.value = setTimeout(changeTime.bind(this), 1000);
         }
-        clearTimeout(context('global').timerId.value);
-        context('global').timerId.value = setTimeout(changeTime.bind(this), 1000);
+
+        context('global').timerId.value = setInterval(changeTime.bind(this), 1000);
+
+    }
+
+    async $$gameOver(){
+        const gc = context('global');
+        gc.gameOver.value = true;
+        clearInterval(gc.timerId.value);
+
+        gc.highScore.value = Math.max(Number(gc.score.value), Number(gc.highScore.value));
+        localStorage.setItem('highScore', gc.highScore.value);
 
     }
 

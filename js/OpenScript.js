@@ -1744,7 +1744,7 @@ var OpenScript = {
          * @param  {...any} args 
          * @returns 
          */
-        fire(...args) {
+        async fire(...args) {
             
             for(let [k, component] of this.listeners){
                 component.wrap(...args, this.signature);
