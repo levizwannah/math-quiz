@@ -3,6 +3,8 @@
 :root {
    --keypad-spacer: .75rem;
    --body-bg: #fafaf5;
+   --ojs-top: 2rem;
+   --ojs-x: 3rem;
 }
 
 #root {
@@ -21,15 +23,15 @@
    text-shadow:
       1px 1px #fff,
       2px 3px rgba(11, 11, 78, .25);
-   top: 2rem;
+   top: var(--ojs-top);
 }
 
 #root::before {
-   left: 3rem;
+   left: var(--ojs-x);
 }
 
 #root::after {
-   right: 3rem;
+   right: var(--ojs-x);
 }
 
 .lives {
@@ -132,32 +134,35 @@
    padding-block: 1rem .5rem;
 }
 
-.row-scores :nth-child(2) {
+.row-scores>* {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+
+.row-scores > :nth-child(2) {
    margin-right: auto;
 }
 
-.row-scores span {
-   display: inline-block;
-}
-
-.row-scores :nth-child(1)>span:first-child,
-.row-scores :nth-child(2)>span:first-child {
+.row-scores > :nth-child(1)>span:first-child,
+.row-scores > :nth-child(2)>span:first-child {
    color: #798095;
    padding-right: .5rem;
    font-weight: 500;
 }
 
-.row-scores :nth-child(3),
-.row-scores :nth-child(4) {
+.row-scores > :nth-child(3),
+.row-scores > :nth-child(4) {
    cursor: pointer;
    background-color: #fff;
 }
 
-.row-scores :nth-child(3):hover {
+.row-scores > :nth-child(3):hover {
    background-color: #f1c6c6;
 }
 
-.row-scores :nth-child(4):hover {
+.row-scores > :nth-child(4):hover {
    background-color: #d0f4df;
 }
 
@@ -236,4 +241,69 @@
 .modal-footer {
    border-bottom-left-radius: calc(var(--radius) - 1px);
    border-bottom-right-radius: calc(var(--radius) - 1px);
+}
+
+
+/* media queries */
+
+@media (max-width: 850px) {
+   :root {
+      --ojs-top: 8rem;
+      --ojs-x: 1rem;
+   }
+
+   #root::before,
+   #root::after {
+      font-size: 2rem;
+      opacity: .5;
+   }
+   
+   .row-keypad::before,
+   .row-keypad::after {
+      font-size: 2.5rem;
+      opacity: .5;
+   }
+
+   .row-keypad::before {
+      transform: translateX(-8.5rem) rotate(-90deg);
+   }
+
+   .row-keypad::after {
+      transform: translateX(8.5rem) rotate(90deg);
+   }
+}
+
+@media (max-width: 700px) {
+   .row-keypad::before {
+      transform: translateX(-5.5rem) rotate(-90deg);
+   }
+
+   .row-keypad::after {
+      transform: translateX(5.5rem) rotate(90deg);
+   }
+}
+
+@media (max-width: 500px) {
+   :root {
+      --ojs-top: 10rem;
+      --ojs-x: .5rem;
+   }
+
+   #root::before,
+   #root::after {
+      font-size: 1.5rem;
+   }
+
+   .row-keypad::before,
+   .row-keypad::after {
+      font-size: 1.75rem;
+   }
+
+   .row-keypad::before {
+      transform: translateX(-4rem) rotate(-90deg);
+   }
+
+   .row-keypad::after {
+      transform: translateX(4rem) rotate(90deg);
+   }
 }
