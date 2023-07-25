@@ -171,7 +171,7 @@ class Index extends Component {
                         v(this.gc.score)
                     )
                 ), 
-                h.div({class: "col-1"}), 
+                 
                 h.div(            
                     {class: "border px-3 py-1 text-center rounded-pill shadow-sm"},
                     h.span("High:"), 
@@ -179,6 +179,22 @@ class Index extends Component {
                         {id: 'high-score'}, " ",
                         v(this.gc.highScore)
                     )
+                ),
+
+                h.div(            
+                    {
+                        class: "border px-3 py-1 text-center rounded-pill shadow-sm",
+                        onclick: 'broker.send("gameOver")'
+                    },
+                    h.i({class: 'fas fa-times text-danger'})
+                ),
+
+                h.div(            
+                    {
+                        class: "border px-3 py-1 text-center rounded-pill shadow-sm",
+                        onclick: 'broker.send("startGame")'
+                    },
+                    h.i({class: 'fas fa-play text-success'})
                 )
             ), 
             h.div(        
@@ -255,6 +271,8 @@ class Index extends Component {
     }
 
     $$timeElapsed(){
+        if(this.gc.gameOver.value === true) return;
+
         broker.send("answerSubmitted", eData({}, this.getSubmission()));
     }
 
