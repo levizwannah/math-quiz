@@ -442,6 +442,10 @@ class Index extends Component {
 
     async $$gameOver(){
         document.getElementById('game-modal-btn')?.click();
+        
+        let audio = document.getElementById('main-sound');
+        audio.pause();
+        audio.currentTime = 0;
     }
 
     async $$startGame(){
