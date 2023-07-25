@@ -272,7 +272,7 @@ class Index extends Component {
                  
                 h.div(            
                     {class: "border px-3 py-1 text-center rounded-pill shadow-sm"},
-                    h.span("High:"), 
+                    h.span("High: "), 
                     h.span(
                         {id: 'high-score'}, " ",
                         v(this.gc.highScore)
@@ -348,14 +348,39 @@ class Index extends Component {
                     data_bs_toggle: "modal",
                     data_bs_target: "#gameModal",
                     id: "game-modal-btn"
-                },
-                
+                }
+            ),
+
+            h.div(
+                {class: 'd-none'},
+                h.audio(
+                    {
+                        src: '/assets/sounds/main-sound.mp3',
+                        loop: 'true',
+                        id: 'main-sound'
+                    }
+                ),
+
+                h.audio(
+                    {
+                        src: '/assets/sounds/wrong-click.mp3',
+                        id: 'wrong-input-sound'
+                    }
+                ),
+
+                h.audio(
+                    {
+                        src: '/assets/sounds/success-1.mp3',
+                        id: 'correct-input-sound'
+                    }
+                )
+
             )
         )
     }
 
     async $_rendered_rerendered(){
-        broker.send('startGame');
+        //broker.send('startGame');
     }
 
     async $_keyInput$KeyPad(component, event, number){
@@ -393,6 +418,11 @@ class Index extends Component {
         setTimeout(() => {
             elem.classList.remove('border-success');
         }, 1000);
+
+        let audio = document.getElementById('correct-input-sound');
+        audio.volume = 0.8;
+        audio.play();
+        
     }
 
     async $$answerWrong(){
@@ -404,10 +434,20 @@ class Index extends Component {
             elem.classList.remove('border-danger');
         }, 1000);
 
+        let audio = document.getElementById('wrong-input-sound');
+        audio.volume = 0.75;
+        audio.play();
+
     }
 
     async $$gameOver(){
         document.getElementById('game-modal-btn')?.click();
+    }
+
+    async $$startGame(){
+        let audio = document.getElementById('main-sound');
+        audio.volume = 0.3;
+        audio.play();
     }
 
     clearInput(all = false){
