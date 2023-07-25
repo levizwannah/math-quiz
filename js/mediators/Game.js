@@ -65,8 +65,14 @@ class Game extends OpenScript.Mediator {
     }
 
     async $$startGame(){
-        context('global').timer.value = context('global').timeLimit.value;
-        
+        const gc = context('global');
+
+        gc.timer.value = gc.timeLimit.value;
+        gc.given.value = 0;
+        gc.lives.value = gc.maxLives.value;
+        gc.score.value = 0;
+        gc.gameOver.value = false;
+
         this.send('startTimer');
         this.send('showQuestion');
     }
@@ -137,6 +143,8 @@ class Game extends OpenScript.Mediator {
     async $$gameOver(){
         const gc = context('global');
         gc.gameOver.value = true;
+        gc.timer.value = 0;
+
         clearInterval(gc.timerId.value);
 
         gc.highScore.value = Math.max(Number(gc.score.value), Number(gc.highScore.value));
