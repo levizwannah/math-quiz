@@ -160,6 +160,17 @@
    font-weight: 900;
 }
 
+/* answer */
+
+.answer-input {
+   padding-block: .35rem .1rem;
+}
+.answer-input>* {
+   line-height: 1;
+}
+
+/* modal */
+
 .modal-content {
    --radius: .5rem;
    border-radius: var(--radius);

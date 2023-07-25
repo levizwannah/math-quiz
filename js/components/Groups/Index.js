@@ -235,7 +235,7 @@ class Index extends Component {
                 {class: "mb-2 text-center"},
                 h.div(            
                     {
-                        class: "border rounded-pill w-50 mx-auto",
+                        class: "answer-input border rounded-pill w-50 mx-auto",
                         id: "answer-input"
                     },
                     h.h1(v(this.gc.input))
