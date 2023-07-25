@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+
 :root {
    --keypad-spacer: .75rem;
    --body-bg: #fafaf5;
@@ -7,6 +9,27 @@
    min-height: 100vh;
    min-height: 100dvh;
    background-color: var(--body-bg);
+}
+
+#root::before,
+#root::after {
+   content: "Ojs";
+   position: fixed;
+   font-size: 3rem;
+   font-weight: 700;
+   color: rgba(19, 183, 95, 0.5);
+   text-shadow:
+      1px 1px #fff,
+      2px 3px rgba(11, 11, 78, .25);
+   top: 2rem;
+}
+
+#root::before {
+   left: 3rem;
+}
+
+#root::after {
+   right: 3rem;
 }
 
 .lives {
@@ -28,6 +51,34 @@
 
 
 /* keypad */
+
+.row-keypad {
+   position: relative;
+}
+
+.row-keypad::before,
+.row-keypad::after {
+   content: "Math Quiz";
+   position: absolute;
+   font-size: 4rem;
+   font-weight: 700;
+   font-family: 'Berkshire Swash', cursive;
+   color: rgba(0, 0, 0, .15);
+   text-shadow:
+      1px 1px #fff,
+      2px 3px rgba(11, 11, 78, .25);
+   top: 0;
+}
+
+.row-keypad::before {
+   transform: translateX(-17.5rem) rotate(-45deg);
+   left: 0;
+}
+
+.row-keypad::after {
+   transform: translateX(17.5rem) rotate(45deg);
+   right: 0;
+}
 
 .row-keypad .row {
    justify-content: center;
@@ -99,6 +150,15 @@
 .row-scores :nth-child(3),
 .row-scores :nth-child(4) {
    cursor: pointer;
+   background-color: #fff;
+}
+
+.row-scores :nth-child(3):hover {
+   background-color: #f1c6c6;
+}
+
+.row-scores :nth-child(4):hover {
+   background-color: #d0f4df;
 }
 
 
@@ -147,4 +207,33 @@
    display: inline-flex;
    align-items: center;
    justify-content: center;
+   color: var(--bs-danger);
+   font-weight: 900;
+}
+
+/* answer */
+
+.answer-input {
+   padding-block: .35rem .1rem;
+}
+.answer-input>* {
+   line-height: 1;
+}
+
+/* modal */
+
+.modal-content {
+   --radius: .5rem;
+   border-radius: var(--radius);
+   box-shadow: 7px 10px 30px rgba(0, 0, 0, .25);
+}
+
+.modal-header {
+   border-top-left-radius: calc(var(--radius) - 1px);
+   border-top-right-radius: calc(var(--radius) - 1px);
+}
+
+.modal-footer {
+   border-bottom-left-radius: calc(var(--radius) - 1px);
+   border-bottom-right-radius: calc(var(--radius) - 1px);
 }
