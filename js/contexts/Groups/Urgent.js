@@ -24,7 +24,7 @@ class Global extends OpenScript.Context {
         this.has('lives').value = this.maxLives.value;
         this.has('timer').value = this.timeLimit.value;
         this.has('given').value = 0;
-        this.has('max').value = 200;
+        this.has('max').value = 1000;
         this.has('input').value = 0;
         this.has('highScore').value = localStorage.getItem('highScore') ?? 0;
         this.has('scoreIncrement').value = 5;
