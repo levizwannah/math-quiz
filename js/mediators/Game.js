@@ -102,7 +102,7 @@ class Game extends OpenScript.Mediator {
         const {correct} = ed.message;
         const gc = context('global');
 
-        if(!correct && gc.timer.value != 0) return;
+        if(!correct && gc.timer.value != 0) return gc.score.value -= 2;
         
         if(!correct && gc.timer.value == 0) {
             gc.lives.value--;
