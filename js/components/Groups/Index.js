@@ -420,7 +420,7 @@ class Index extends Component {
         }, 1000);
 
         let audio = document.getElementById('correct-input-sound');
-        audio.volume = 0.8;
+        audio.volume = 1;
         audio.play();
         
     }
@@ -435,14 +435,14 @@ class Index extends Component {
         }, 1000);
 
         let audio = document.getElementById('wrong-input-sound');
-        audio.volume = 0.75;
+        audio.volume = 1;
         audio.play();
 
     }
 
     async $$gameOver(){
         document.getElementById('game-modal-btn')?.click();
-        
+
         let audio = document.getElementById('main-sound');
         audio.pause();
         audio.currentTime = 0;
@@ -450,7 +450,7 @@ class Index extends Component {
 
     async $$startGame(){
         let audio = document.getElementById('main-sound');
-        audio.volume = 0.3;
+        audio.volume = 0.4;
         audio.play();
     }
 
