@@ -355,7 +355,7 @@ class Index extends Component {
                 {class: 'd-none'},
                 h.audio(
                     {
-                        src: '/assets/sounds/main-sound.mp3',
+                        src: './assets/sounds/main-sound.mp3',
                         loop: 'true',
                         id: 'main-sound'
                     }
@@ -363,14 +363,14 @@ class Index extends Component {
 
                 h.audio(
                     {
-                        src: '/assets/sounds/wrong-click.mp3',
+                        src: './assets/sounds/wrong-click.mp3',
                         id: 'wrong-input-sound'
                     }
                 ),
 
                 h.audio(
                     {
-                        src: '/assets/sounds/success-1.mp3',
+                        src: './assets/sounds/success-1.mp3',
                         id: 'correct-input-sound'
                     }
                 )
