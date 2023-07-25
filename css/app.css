@@ -81,6 +81,26 @@
    padding-block: 1rem .5rem;
 }
 
+.row-scores :nth-child(2) {
+   margin-right: auto;
+}
+
+.row-scores span {
+   display: inline-block;
+}
+
+.row-scores :nth-child(1)>span:first-child,
+.row-scores :nth-child(2)>span:first-child {
+   color: #798095;
+   padding-right: .5rem;
+   font-weight: 500;
+}
+
+.row-scores :nth-child(3),
+.row-scores :nth-child(4) {
+   cursor: pointer;
+}
+
 
 /* lives */
 

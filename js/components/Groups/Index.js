@@ -162,7 +162,7 @@ class Index extends Component {
         return h.div(    
             {class: "container"},
             h.div(        
-                {class: "row-scores d-flex mt-2- fw-bolder mb-2 justify-content-center"},
+                {class: "row-scores d-flex gap-2 fw-bolder mb-2 justify-content-center"},
                 h.div(            
                     {class: "border px-3 py-1 text-center rounded-pill shadow-sm"},
                     h.span("Score:"), 
@@ -183,18 +183,18 @@ class Index extends Component {
 
                 h.div(            
                     {
-                        class: "border px-3 py-1 text-center rounded-pill shadow-sm",
+                        class: "border px-3 py-1 text-center text-danger rounded-pill shadow-sm",
                         onclick: 'broker.send("gameOver")'
                     },
-                    h.i({class: 'fas fa-times text-danger'})
+                    h.i({class: 'fa-solid fa-xmark'})
                 ),
 
                 h.div(            
                     {
-                        class: "border px-3 py-1 text-center rounded-pill shadow-sm",
+                        class: "border px-3 py-1 text-center text-success rounded-pill shadow-sm",
                         onclick: 'broker.send("startGame")'
                     },
-                    h.i({class: 'fas fa-play text-success'})
+                    h.i({class: 'fas fa-play'})
                 )
             ), 
             h.div(        
