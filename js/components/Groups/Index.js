@@ -18,7 +18,8 @@ class KeyPad extends Component {
                             {
                                 class: "btn btn-outline-dark btn-number",
                                 data_number: i - j,
-                                onclick: this.method('click', [i - j])
+                                onclick: this.method('click', [i - j]),
+                                id: `key-${i - j}`
                             },
                             i - j
                         )
@@ -33,7 +34,8 @@ class KeyPad extends Component {
                         h.button(                            
                             {
                                 class: "btn btn-danger btn-clear",
-                                onclick: this.method('clear')
+                                onclick: this.method('clear'),
+                                id: 'key-Backspace'
                             },
                             h.i({ class: "fa-solid fa-xmark"})
                         )
@@ -44,7 +46,8 @@ class KeyPad extends Component {
                             {
                                 class: "btn btn-outline-dark btn-number",
                                 data_number: "0",
-                                onclick: this.method('click', [0])
+                                onclick: this.method('click', [0]),
+                                id: 'key-0'
                             },
                             0
                         )
@@ -54,7 +57,8 @@ class KeyPad extends Component {
                         h.button(                            
                             {
                                 class: "btn btn-success btn-clear",
-                                onclick: this.method('submit')
+                                onclick: this.method('submit'),
+                                id: 'key-Enter',
                             },
                             h.i({class: "fa-solid fa-check"})
                         )
@@ -81,6 +85,15 @@ class KeyPad extends Component {
             ),
             ...args
         )
+    }
+
+    $_rendered_rerendered(){
+        window.addEventListener('keyup', function(event){
+            const key = event.key;
+            
+            let keyElement = document.querySelector(`#key-${key}`);
+            keyElement?.click();
+        });
     }
 
     click(number){
