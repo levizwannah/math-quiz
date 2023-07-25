@@ -150,6 +150,89 @@ class Question extends Component {
 
 }
 
+class GameModal extends Component {
+    
+    constructor(){
+        super();
+
+        this.gc = context('global');
+
+        this.gc.states({
+            score: 0,
+            highScore: 0,
+        });
+    }
+
+    render(...args){
+        
+        return h.div(
+            {
+                class: "modal fade",
+                id: "gameModal",
+                tabindex: "-1",
+                aria_labelledby: "gameModalLabel",
+                aria_hidden: "true"
+            },
+            h.div(        
+                {class: "modal-dialog modal-dialog-centered"},
+                h.div(            
+                    {class: "modal-content"},
+                    h.div(                
+                        {class: "modal-header border-white"},
+                        h.h5(
+                            {
+                                class: "modal-title text-danger",
+                                id: "gameModalLabel"
+                            },
+                            "Game Over!!!"
+                        ), 
+                        h.button(                    {
+                                type: "button",
+                                class: "btn-close",
+                                data_bs_dismiss: "modal",
+                                aria_label: "Close"
+                            })
+                    ), 
+                    h.div(                
+                        {class: "modal-body"},
+                        h.p("Your score is:", 
+                            h.span(
+                                {
+                                    class: "fw-bold",
+                                    id: "score"
+                                },
+                                " ",
+                                v(this.gc.score)
+                            )), 
+                        h.p("Your highest score is:", 
+                            h.span(
+                                {
+                                    class: "fw-bold",
+                                    id: "scoreHighest"
+                                },
+                                " ",
+                                v(this.gc.highScore)
+                            ))
+                    ), 
+                    h.div(                
+                        {class: "modal-footer"},
+                        h.button(
+                            {
+                                type: "button",
+                                class: "btn btn-primary",
+                                data_bs_dismiss: "modal"
+                            },
+                            "Close"
+                        )
+                    )
+                )
+            ),
+
+            ...args
+        )
+    }
+}
+
 class Index extends Component {
     gc;
 
@@ -166,7 +249,8 @@ class Index extends Component {
             lives: 0,
             given: 0,
             max: 0,
-            input: 0
+            input: 0,
+            penalty: 0
         });
     }
 
@@ -176,6 +260,7 @@ class Index extends Component {
             {class: "container"},
             h.div(        
                 {class: "row-scores d-flex gap-2 fw-bolder mb-2 justify-content-center"},
+                h.GameModal(),
                 h.div(            
                     {class: "border px-3 py-1 text-center rounded-pill shadow-sm"},
                     h.span("Score:"), 
@@ -254,23 +339,34 @@ class Index extends Component {
                     h.h1(v(this.gc.input))
                 )
             ), 
-            h.KeyPad()
+            h.KeyPad(),
+
+            h.button(
+                {
+                    type: "button",
+                    class: "btn d-none",
+                    data_bs_toggle: "modal",
+                    data_bs_target: "#gameModal",
+                    id: "game-modal-btn"
+                },
+                
+            )
         )
     }
 
-    $_rendered_rerendered(){
+    async $_rendered_rerendered(){
         broker.send('startGame');
     }
 
-    $_keyInput$KeyPad(component, event, number){
+    async $_keyInput$KeyPad(component, event, number){
         this.gc.input.value = Number(this.gc.input.value + `${number}`);
     }
 
-    $_keySubmit$KeyPad(...args){
+    async $_keySubmit$KeyPad(...args){
         broker.send("answerSubmitted", eData({}, this.getSubmission()));
     }
 
-    $_keyClear$KeyPad(...args){
+    async $_keyClear$KeyPad(...args){
         this.clearInput();
     }
 
@@ -283,13 +379,13 @@ class Index extends Component {
         return {answer, question};
     }
 
-    $$timeElapsed(){
+    async $$timeElapsed(){
         if(this.gc.gameOver.value === true) return;
 
         broker.send("answerSubmitted", eData({}, this.getSubmission()));
     }
 
-    $$answerCorrect(){
+    async $$answerCorrect(){
         
         let elem = document.querySelector('#answer-input');
         elem.classList.add('border-success');
@@ -299,7 +395,7 @@ class Index extends Component {
         }, 1000);
     }
 
-    $$answerWrong(){
+    async $$answerWrong(){
 
         let elem = document.querySelector('#answer-input');
         elem.classList.add('border-danger');
@@ -308,6 +404,10 @@ class Index extends Component {
             elem.classList.remove('border-danger');
         }, 1000);
 
+    }
+
+    async $$gameOver(){
+        document.getElementById('game-modal-btn')?.click();
     }
 
     clearInput(all = false){

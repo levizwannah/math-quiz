@@ -12,6 +12,7 @@ class Global extends OpenScript.Context {
     scoreIncrement;
     timerId;
     gameOver;
+    penalty;
     
     constructor(){
         super();
@@ -29,5 +30,6 @@ class Global extends OpenScript.Context {
         this.has('scoreIncrement').value = 5;
         this.has('timerId').value = null;
         this.has('gameOver').value = false;
+        this.has('penalty').value = 2;
     }
 }

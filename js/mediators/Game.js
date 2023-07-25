@@ -52,12 +52,13 @@ class Game extends OpenScript.Mediator {
 
         const limit = (number) => gc.timeLimit.value = number;
         const increment = (number) => gc.scoreIncrement.value = number;
+        const penalty = (number) => gc.penalty.value = number;
 
-        if(given > 150) digitsLimit = 50, limit(25), increment(20);
-        else if(given > 100) digitsLimit = 25, limit(20), increment(15);
-        else if(given > 50) digitsLimit = 20, limit(15), increment(13);
-        else if(given > 20) digitsLimit = 15, limit(13), increment(10);
-        else if(given > 10) digitsLimit = 12, increment(7);
+        if(given > 150) digitsLimit = 100, limit(25), increment(20), penalty(10);
+        else if(given > 100) digitsLimit = 75, limit(20), increment(15), penalty(7);
+        else if(given > 50) digitsLimit = 50, limit(15), increment(13), penalty(6);
+        else if(given > 20) digitsLimit = 25, limit(13), increment(10), penalty(5);
+        else if(given > 10) digitsLimit = 15, increment(7), penalty(3);
 
         gc.question.value = this.generateQuestion(digitsLimit);
         gc.given.value++;
@@ -72,12 +73,16 @@ class Game extends OpenScript.Mediator {
         gc.lives.value = gc.maxLives.value;
         gc.score.value = 0;
         gc.gameOver.value = false;
+        gc.penalty.value = 2;
 
         this.send('startTimer');
         this.send('showQuestion');
     }
 
     async $$answerSubmitted(data){
+
+        if(context('global').gameOver.value !== false) return;
+
         let ed = EventData.parse(data);
     
         const question  = ed.message.question;
@@ -102,7 +107,7 @@ class Game extends OpenScript.Mediator {
         const {correct} = ed.message;
         const gc = context('global');
 
-        if(!correct && gc.timer.value != 0) return gc.score.value -= 2;
+        if(!correct && gc.timer.value != 0) return gc.score.value -= gc.penalty.value;
         
         if(!correct && gc.timer.value == 0) {
             gc.lives.value--;
@@ -128,6 +133,7 @@ class Game extends OpenScript.Mediator {
 
         const changeTime = () => {
             let timer = context('global').timer;
+
             if(timer.value <= 0) {
                 timer.value = 0;
                 return broker.send('timeElapsed');
@@ -149,7 +155,6 @@ class Game extends OpenScript.Mediator {
 
         gc.highScore.value = Math.max(Number(gc.score.value), Number(gc.highScore.value));
         localStorage.setItem('highScore', gc.highScore.value);
-
     }
 
 }
