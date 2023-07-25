@@ -16,7 +16,7 @@ class KeyPad extends Component {
                         {class: "col-4"},
                         h.button(
                             {
-                                class: "btn btn-outline-primary btn-number",
+                                class: "btn btn-outline-dark btn-number",
                                 data_number: i - j,
                                 onclick: this.method('click', [i - j])
                             },
@@ -32,17 +32,17 @@ class KeyPad extends Component {
                         {class: "col-4"},
                         h.button(                            
                             {
-                                class: "btn btn-outline-danger btn-clear",
+                                class: "btn btn-danger btn-clear",
                                 onclick: this.method('clear')
                             },
-                            "X"
+                            h.i({ class: "fa-solid fa-xmark"})
                         )
                     ), 
                     h.div(                        
                         {class: "col-4"},
                         h.button(
                             {
-                                class: "btn btn-outline-primary btn-number",
+                                class: "btn btn-outline-dark btn-number",
                                 data_number: "0"
                             },
                             0
@@ -55,7 +55,7 @@ class KeyPad extends Component {
                                 class: "btn btn-success btn-clear",
                                 onclick: this.method('submit')
                             },
-                            h.i({class: "fas fa-check"})
+                            h.i({class: "fa-solid fa-check"})
                         )
                     )
                 );
@@ -63,7 +63,7 @@ class KeyPad extends Component {
 
             rows.push(
                 h.div(                    
-                    {class: "row mt-2"},
+                    {class: "row mt-2-"},
                     buttons
                 ), 
             );
@@ -72,7 +72,7 @@ class KeyPad extends Component {
         }
 
         return h.div(
-            {class: 'row'},
+            {class: 'row row-keypad mt-5'},
 
             h.div(
                 {class: 'col-12'},
@@ -103,27 +103,27 @@ class Question extends Component {
         return h.div(        
             {class: "d-flex mb-2 text-center justify-content-center align-items-center"},
             h.div(            
-                {class: "border p-4 rounded shadow-sm"},
+                {class: "box-op-number border rounded"},
                 h.span(
                     {
-                        class: "fs-3 fw-bold text-dark",
+                        class: "fs-4 fw-bold text-dark",
                         id: "num-1"
                     },
                     q?.numbers?.first
                 )
-            ), 
+            ),
             h.div(            
-                {class: "border px-2 rounded-circle fs-3 fw-bold mx-4"},
+                {class: "box-op-sign border px-2 rounded-circle fs-5 fw-bold mx-4"},
                 h.i({
                         class: `fas fa-${q?.operator}`,
                         id: "operator"
                     })
             ), 
             h.div(            
-                {class: "border p-4 rounded shadow-sm"},
+                {class: "box-op-number border rounded"},
                 h.span(
                     {
-                        class: "fs-3 fw-bold text-dark",
+                        class: "fs-4 fw-bold text-dark",
                         id: "num-2"
                     },
                     q?.numbers?.second
@@ -161,7 +161,7 @@ class Index extends Component {
         return h.div(    
             {class: "container"},
             h.div(        
-                {class: "d-flex mt-2 fw-bolder mb-2 justify-content-center"},
+                {class: "row-scores d-flex mt-2- fw-bolder mb-2 justify-content-center"},
                 h.div(            
                     {class: "border px-3 py-1 text-center rounded-pill shadow-sm"},
                     h.span("Score:"), 
@@ -181,7 +181,7 @@ class Index extends Component {
                 )
             ), 
             h.div(        
-                {class: "row mb-2"},
+                {class: "row row-lives mb-2"},
                 h.div(            
                     {class: "col col-9"},
                     h.div(                
@@ -209,7 +209,7 @@ class Index extends Component {
                 )
             ),
             h.div(
-                {class: 'text-center text-muted text-sm mb-1'},
+                {class: 'row-questions text-center text-muted text-sm mb-1'},
                 v(this.gc.given), ' / ', v(this.gc.max), ' questions.'
             ),
 

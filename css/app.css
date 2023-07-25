@@ -1,0 +1,124 @@
+:root {
+   --keypad-spacer: .75rem;
+   --body-bg: #fafaf5;
+}
+
+#root {
+   min-height: 100vh;
+   min-height: 100dvh;
+   background-color: var(--body-bg);
+}
+
+.lives {
+   color: rgb(245, 76, 76);
+}
+
+.container {
+   max-width: 600px !important;
+}
+
+[class*=btn-outline] {
+   background-color: #fff;
+   border-color: #fff;
+}
+
+.row {
+   --bs-gutter-x: 0;
+}
+
+
+/* keypad */
+
+.row-keypad .row {
+   justify-content: center;
+}
+
+.row-keypad .row>* {
+   width: max-content;
+}
+
+.row-keypad .row+* {
+   margin-top: var(--keypad-spacer);
+}
+
+.row-keypad .row>*+* {
+   margin-left: var(--keypad-spacer);
+}
+
+.row-keypad .btn {
+   --size: 4.5rem;
+   width: calc(1.1 * var(--size));
+   height: var(--size);
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 2rem;
+   font-weight: 700;
+   border-radius: .35rem;
+   user-select: none;
+   text-shadow:
+      1px 1px #fff,
+      2px 3px rgba(11, 11, 78, .25);
+   box-shadow:
+      0 0 2px rgba(0, 0, 0, .15),
+      1px 2px 5px rgba(7, 60, 159, .15);
+}
+
+.row-keypad .btn-number {
+   padding-bottom: .6rem;
+}
+
+.row-keypad .btn-number:hover {
+   text-shadow:
+      1px 1px #212529,
+      2px 3px rgba(184, 184, 227, 0.4);
+}
+
+
+/* scores */
+
+.row-scores {
+   padding-block: 1rem .5rem;
+}
+
+
+/* lives */
+
+.row-lives {
+   padding: .3rem .75rem;
+   background-color: #e4d8bf;
+   border-radius: .5rem;
+   box-shadow:
+      0 0 0 2px var(--body-bg),
+      3px 3px 4px rgba(0, 0, 0, .1);
+}
+
+.lives {
+   height: 100%;
+   display: flex;
+   align-items: center;
+}
+
+/* questions */
+
+.row-questions {
+   padding-block: .5rem;
+}
+
+
+/* operations */
+
+.box-op-number {
+   padding: .5rem 1rem;
+   line-height: 1;
+}
+
+.box-op-sign {
+   --size: 40px;
+   width: var(--size);
+   height: var(--size);
+   line-height: 1;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+}
